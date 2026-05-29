@@ -137,3 +137,6 @@ No build step, no package manager, no server needed.
 ## Author
 
 Ko Shan Si
+
+
+## Price Prediction are for educational purposes only
