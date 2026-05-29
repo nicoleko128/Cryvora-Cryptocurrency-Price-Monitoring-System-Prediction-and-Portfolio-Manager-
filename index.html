@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryvora - Cryptocurrency Price Monitoring System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@400;600&family=Oxanium:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══════════════ PAGE LOADER ══════════════ -->
+<div id="pageLoader">
+    <div class="loader-inner">
+        <div class="lc-stage">
+            <!-- Coins burst outward from center -->
+            <div class="lc-coin lc-c1" style="background:rgba(251,191,36,0.12);border:2px solid rgba(251,191,36,0.55);color:#fbbf24">₿</div>
+            <div class="lc-coin lc-c2" style="background:rgba(124,58,237,0.12);border:2px solid rgba(124,58,237,0.55);color:#a78bfa">Ξ</div>
+            <div class="lc-coin lc-c3" style="background:rgba(0,229,160,0.12);border:2px solid rgba(0,229,160,0.55);color:#00e5a0">◎</div>
+            <div class="lc-coin lc-c4" style="background:rgba(59,130,246,0.12);border:2px solid rgba(59,130,246,0.55);color:#3b82f6">₳</div>
+            <div class="lc-coin lc-c5" style="background:rgba(255,165,0,0.10);border:2px solid rgba(255,165,0,0.45);color:#f59e0b">Ð</div>
+            <div class="lc-coin lc-c6" style="background:rgba(0,212,255,0.12);border:2px solid rgba(0,212,255,0.55);color:#00d4ff">₮</div>
+            <!-- Pulsing center hub with Cryvora logo -->
+            <div class="lc-hub">
+                <svg width="46" height="46" viewBox="0 0 34 34" fill="none">
+                    <defs>
+                        <linearGradient id="lhg1" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#7c3aed"/>
+                        </linearGradient>
+                        <linearGradient id="lhg2" x1="0" y1="1" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#00d4ff"/>
+                        </linearGradient>
+                    </defs>
+                    <polygon points="17,1.5 30,9 30,25 17,32.5 4,25 4,9" fill="url(#lhg1)" fill-opacity="0.15" stroke="url(#lhg1)" stroke-width="1.5"/>
+                    <polyline points="7,24 11,18 15.5,20.5 21,12 27,15" fill="none" stroke="url(#lhg2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="21" cy="12" r="2.5" fill="#00d4ff"/>
+                </svg>
+            </div>
+        </div>
+        <div class="loader-name">CRYVORA</div>
+        <div class="loader-tagline">Cryptocurrency Price Monitor</div>
+    </div>
+</div>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav class="cv-sidebar" id="cvSidebar">
+  <div class="sidebar-brand">
+    <svg width="28" height="28" viewBox="0 0 34 34" fill="none">
+      <defs>
+        <linearGradient id="slg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient>
+        <linearGradient id="slg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
+      </defs>
+      <polygon points="17,1.5 30,9 30,25 17,32.5 4,25 4,9" fill="url(#slg1)" fill-opacity="0.15" stroke="url(#slg1)" stroke-width="1.5"/>
+      <polyline points="7,24 11,18 15.5,20.5 21,12 27,15" fill="none" stroke="url(#slg2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="21" cy="12" r="2.2" fill="#22d3ee"/>
+    </svg>
+    <span class="sidebar-brand-text">CRYVORA</span>
+  </div>
+
+  <div class="sidebar-nav">
+    <a class="sidebar-link active" href="#dashboard">
+      <span class="sl-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+      <span class="sl-label">Dashboard</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#market">
+      <span class="sl-icon"><i class="bi bi-table"></i></span>
+      <span class="sl-label">Market</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#charts">
+      <span class="sl-icon"><i class="bi bi-graph-up"></i></span>
+      <span class="sl-label">Charts</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#prediction">
+      <span class="sl-icon"><i class="bi bi-robot"></i></span>
+      <span class="sl-label">Prediction</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#portfolio">
+      <span class="sl-icon"><i class="bi bi-briefcase-fill"></i></span>
+      <span class="sl-label">Portfolio</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#watchlist">
+      <span class="sl-icon"><i class="bi bi-star-fill"></i></span>
+      <span class="sl-label">Watchlist</span>
+      <span class="sl-pip"></span>
+    </a>
+    <a class="sidebar-link" href="#compare">
+      <span class="sl-icon"><i class="bi bi-bar-chart-steps"></i></span>
+      <span class="sl-label">Compare</span>
+      <span class="sl-pip"></span>
+    </a>
+  </div>
+
+  <div class="sidebar-bottom">
+    <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Toggle sidebar">
+      <i class="bi bi-layout-sidebar-reverse"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════ MAIN AREA ══════════════ -->
+<div class="main-area" id="mainArea">
+
+<!-- ══════════════ NAVBAR ══════════════ -->
+<nav class="navbar navbar-expand-lg cv-navbar">
+    <div class="container-fluid gap-2">
+        <!-- Brand only shown on mobile (sidebar handles desktop branding) -->
+        <a class="navbar-brand d-md-none" href="#">
+            <svg width="28" height="28" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+                <defs>
+                    <linearGradient id="nlg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+                    <linearGradient id="nlg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient>
+                </defs>
+                <polygon points="17,1.5 30,9 30,25 17,32.5 4,25 4,9" fill="url(#nlg1)" fill-opacity="0.13" stroke="url(#nlg1)" stroke-width="1.5"/>
+                <polyline points="7,24 11,18 15.5,20.5 21,12 27,15" fill="none" stroke="url(#nlg2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="21" cy="12" r="2.2" fill="#00d4ff"/>
+            </svg>
+            <span class="brand-glow">Cryvora</span>
+        </a>
+
+        <div class="search-bar-wrap" id="searchBarWrap">
+            <div class="search-bar">
+                <div class="cv-search-group">
+                    <i class="bi bi-search cv-search-icon"></i>
+                    <input type="text" id="searchInput" class="cv-search-input" placeholder="Search coins..." autocomplete="off">
+                    <span class="cv-search-kbd" id="searchKbd">/</span>
+                    <button class="cv-search-btn" id="searchBtn"><i class="bi bi-arrow-right"></i></button>
+                </div>
+                <div class="search-suggestions" id="searchSuggestions" style="display:none"></div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <div class="market-stats-bar d-none d-xl-flex" id="marketStats">
+                <span class="text-muted small">Loading...</span>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary" id="themeToggle" title="Toggle Theme">
+                <i class="bi bi-sun-fill"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- ══════════════ TICKER ══════════════ -->
+<div class="ticker-container">
+    <div class="ticker-wrap">
+        <div class="ticker" id="tickerContent">Loading market data...</div>
+    </div>
+</div>
+
+<!-- ══════════════ COIN DETAIL MODAL ══════════════ -->
+<div class="modal fade" id="coinDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content cv-modal">
+            <div class="modal-header border-0 pb-0">
+                <div class="d-flex align-items-center gap-3">
+                    <img id="mdIcon" src="" alt="" style="width:44px;height:44px;border-radius:50%">
+                    <div>
+                        <h5 id="mdName" class="mb-0 fw-bold"></h5>
+                        <span id="mdSymbol" class="badge-sym"></span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-themed" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">Current Price</div><div class="ds-val" id="mdPrice">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">24h Change</div><div class="ds-val" id="md24h">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">Market Cap</div><div class="ds-val" id="mdMcap">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">24h Volume</div><div class="ds-val" id="mdVol">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">24h High</div><div class="ds-val text-green" id="mdHigh">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">24h Low</div><div class="ds-val text-red" id="mdLow">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">All-Time High</div><div class="ds-val" id="mdATH">—</div></div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <div class="detail-stat"><div class="ds-label">Circulating Supply</div><div class="ds-val" id="mdSupply">—</div></div>
+                    </div>
+                </div>
+                <div class="mt-3 d-flex gap-2">
+                    <button class="btn btn-primary btn-sm" id="mdViewChart"><i class="bi bi-graph-up"></i> View Chart</button>
+                    <button class="btn btn-outline-primary btn-sm" id="mdAddWatch"><i class="bi bi-star"></i> Add to Watchlist</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<div class="container-fluid mt-3 pb-5 content-wrap">
+
+    <div class="tab-content">
+
+        <!-- ══════════════════════════ DASHBOARD ══════════════════════════ -->
+        <div class="tab-pane fade show active" id="dashboard">
+
+            <!-- Dashboard Hero -->
+            <div class="dash-hero mb-4">
+              <div class="dash-hero-content">
+                <div class="dash-hero-eyebrow"><span class="live-pulse"></span> LIVE MARKET DATA</div>
+                <h1 class="dash-hero-title">Market Overview</h1>
+                <p class="dash-hero-sub">Real-time prices, sentiment analysis &amp; portfolio tracking for the top 50 cryptocurrencies</p>
+              </div>
+              <div class="dash-hero-badges">
+                <div class="hero-badge"><i class="bi bi-shield-check-fill"></i> Data verified</div>
+                <div class="hero-badge"><i class="bi bi-arrow-repeat"></i> Updates every 60s</div>
+                <div class="hero-badge"><i class="bi bi-database-fill"></i> 50+ assets</div>
+              </div>
+            </div>
+
+            <!-- Market Overview Stats Strip -->
+            <div class="row g-2 mb-3">
+                <div class="col-6 col-md-3">
+                    <div class="card cv-card stat-tile">
+                        <div class="card-body d-flex align-items-center gap-3 py-3">
+                            <div class="st-icon st-icon-blue"><i class="bi bi-globe2"></i></div>
+                            <div>
+                                <div class="st-label">Market Cap</div>
+                                <div class="st-value" id="totalMarketCap">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card cv-card stat-tile">
+                        <div class="card-body d-flex align-items-center gap-3 py-3">
+                            <div class="st-icon st-icon-cyan"><i class="bi bi-bar-chart-line-fill"></i></div>
+                            <div>
+                                <div class="st-label">24h Volume</div>
+                                <div class="st-value" id="totalVolume">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card cv-card stat-tile">
+                        <div class="card-body d-flex align-items-center gap-3 py-3">
+                            <div class="st-icon st-icon-yellow"><i class="bi bi-currency-bitcoin"></i></div>
+                            <div>
+                                <div class="st-label">BTC Dominance</div>
+                                <div class="st-value" id="btcDominance">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card cv-card stat-tile">
+                        <div class="card-body d-flex align-items-center gap-3 py-3">
+                            <div class="st-icon st-icon-green"><i class="bi bi-coin"></i></div>
+                            <div>
+                                <div class="st-label">Active Coins</div>
+                                <div class="st-value" id="activeCryptos">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BTC + ETH Spotlights -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="card cv-card spotlight-card h-100" id="btcCard" onclick="window.viewChart('bitcoin')" style="cursor:pointer">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <img src="https://assets.coincap.io/assets/icons/btc@2x.png" width="44" height="44" style="border-radius:50%;border:2px solid rgba(251,191,36,0.4);padding:2px">
+                                <div>
+                                    <div class="spot-coin-name">Bitcoin</div>
+                                    <div class="spot-coin-sym">BTC &middot; Rank #1</div>
+                                </div>
+                                <span class="spot-rank ms-auto">Store of Value</span>
+                            </div>
+                            <div class="spot-price" id="btcPrice">—</div>
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <div id="btcChange">—</div>
+                                <span class="spot-hint">24h &middot; Click to view chart →</span>
+                            </div>
+                            <div class="d-flex gap-4 spot-extra">
+                                <div>
+                                    <div class="st-label">Market Cap</div>
+                                    <div class="spot-price-sm" id="btcMcap">—</div>
+                                </div>
+                                <div>
+                                    <div class="st-label">24h Volume</div>
+                                    <div class="spot-price-sm" id="btcVol">—</div>
+                                </div>
+                                <div class="ms-auto text-end">
+                                    <div class="st-label">7-Day</div>
+                                    <div id="btcChange7d">—</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card cv-card spotlight-card h-100" id="ethCard" onclick="window.viewChart('ethereum')" style="cursor:pointer">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <img src="https://assets.coincap.io/assets/icons/eth@2x.png" width="44" height="44" style="border-radius:50%;border:2px solid rgba(100,120,255,0.4);padding:2px">
+                                <div>
+                                    <div class="spot-coin-name">Ethereum</div>
+                                    <div class="spot-coin-sym">ETH &middot; Rank #2</div>
+                                </div>
+                                <span class="spot-rank ms-auto">Smart Contracts</span>
+                            </div>
+                            <div class="spot-price" id="ethPrice">—</div>
+                            <div class="d-flex align-items-center justify-content-between mt-2">
+                                <div id="ethChange">—</div>
+                                <span class="spot-hint">24h &middot; Click to view chart →</span>
+                            </div>
+                            <div class="d-flex gap-4 spot-extra">
+                                <div>
+                                    <div class="st-label">Market Cap</div>
+                                    <div class="spot-price-sm" id="ethMcap">—</div>
+                                </div>
+                                <div>
+                                    <div class="st-label">24h Volume</div>
+                                    <div class="spot-price-sm" id="ethVol">—</div>
+                                </div>
+                                <div class="ms-auto text-end">
+                                    <div class="st-label">7-Day</div>
+                                    <div id="ethChange7d">—</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Sentiment Analysis -->
+            <div class="row g-3 mb-3 reveal-on-scroll">
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-header d-flex align-items-center justify-content-between" id="saCardHeader" style="cursor:pointer;user-select:none">
+                            <span><i class="bi bi-activity"></i> Market Sentiment Analysis</span>
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="small text-muted" id="saTimestamp">Calculating...</span>
+                                <button class="btn btn-sm sa-toggle-btn" id="saToggleBtn" title="Collapse / Expand" onclick="event.stopPropagation()">
+                                    <i class="bi bi-chevron-up" id="saToggleIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3 align-items-center">
+
+                                <!-- Gauge + Score + Level -->
+                                <div class="col-lg-3 col-md-12 text-center d-flex flex-column align-items-center">
+                                    <div class="sa-icon-wrap" id="saIconWrap" style="color:var(--yellow);border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.08)">
+                                        <i class="bi bi-emoji-neutral-fill sa-icon" id="saIcon" style="color:var(--yellow)"></i>
+                                    </div>
+                                    <svg viewBox="0 0 200 200" class="sa-gauge" id="saGaugeSVG">
+                                        <defs>
+                                            <filter id="saGlow" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                                                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                            </filter>
+                                        </defs>
+                                        <!-- Background track: 270° arc from 135° to 45° (clockwise) -->
+                                        <path d="M 43.43,156.57 A 80,80 0 1,1 156.57,156.57" stroke="#1a2744" stroke-width="13" fill="none" stroke-linecap="round"/>
+                                        <!-- Colored zones (each 54°, 20% of 270°) -->
+                                        <!-- Zone 1: Extreme Fear  135°→189° -->
+                                        <path d="M 43.43,156.57 A 80,80 0 0,1 20.98,87.49"  stroke="#ff3d5a" stroke-width="11" fill="none" opacity="0.25"/>
+                                        <!-- Zone 2: Fear          189°→243° -->
+                                        <path d="M 20.98,87.49  A 80,80 0 0,1 63.68,28.73"  stroke="#ff8c42" stroke-width="11" fill="none" opacity="0.25"/>
+                                        <!-- Zone 3: Neutral       243°→297° -->
+                                        <path d="M 63.68,28.73  A 80,80 0 0,1 136.32,28.73" stroke="#fbbf24" stroke-width="11" fill="none" opacity="0.25"/>
+                                        <!-- Zone 4: Greed         297°→351° -->
+                                        <path d="M 136.32,28.73 A 80,80 0 0,1 179.02,87.49" stroke="#00e5a0" stroke-width="11" fill="none" opacity="0.25"/>
+                                        <!-- Zone 5: Extreme Greed 351°→45° -->
+                                        <path d="M 179.02,87.49 A 80,80 0 0,1 156.57,156.57" stroke="#00d4ff" stroke-width="11" fill="none" opacity="0.25"/>
+                                        <!-- Active arc (dynamic, updated by JS) -->
+                                        <path id="saArc" d="M 43.43,156.57 A 80,80 0 0,1 43.43,156.58" stroke="#fbbf24" stroke-width="11" fill="none" stroke-linecap="round" filter="url(#saGlow)"/>
+                                        <!-- Zone labels -->
+                                        <text x="28"  y="182" fill="#ff3d5a" font-size="7.5" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle">FEAR</text>
+                                        <text x="172" y="182" fill="#00d4ff" font-size="7.5" font-family="Inter,sans-serif" font-weight="700" text-anchor="middle">GREED</text>
+                                        <!-- Center pivot hub -->
+                                        <circle id="saHubRing" cx="100" cy="100" r="9" fill="#080e1c" stroke="#2d4060" stroke-width="1.5"/>
+                                        <!-- Needle (points up at 0°, CSS rotates it to target angle) -->
+                                        <g id="saNeedle">
+                                            <line id="saNeedleLine" x1="100" y1="100" x2="100" y2="30" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+                                            <polygon id="saNeedleTip" points="100,26 97,33 103,33" fill="white"/>
+                                        </g>
+                                        <circle id="saHubDot" cx="100" cy="100" r="4" fill="white"/>
+                                    </svg>
+                                    <div class="sa-score-display">
+                                        <span class="sa-score-num" id="saScoreNum">--</span>
+                                        <span class="sa-score-unit">/100</span>
+                                    </div>
+                                    <div class="sa-level-badge" id="saLevelBadge" style="color:var(--yellow);border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.1)">Loading...</div>
+                                    <div class="sa-trend-badge sa-trend-neut mt-2" id="saTrendBadge">
+                                        <i class="bi bi-arrow-right"></i> Calculating
+                                    </div>
+                                </div>
+
+                                <!-- Sentiment Factors -->
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="sa-section-title">Sentiment Factors</div>
+                                    <div class="sa-factor">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="sa-factor-label"><i class="bi bi-graph-up-arrow me-1"></i>Price Movement (24h)</span>
+                                            <span class="sa-factor-val" id="sfPrice">--</span>
+                                        </div>
+                                        <div class="sa-prog"><div class="sa-prog-bar" id="sfPriceBar" style="width:50%"></div></div>
+                                    </div>
+                                    <div class="sa-factor">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="sa-factor-label"><i class="bi bi-calendar-week me-1"></i>Market Trend (7-day)</span>
+                                            <span class="sa-factor-val" id="sfTrend">--</span>
+                                        </div>
+                                        <div class="sa-prog"><div class="sa-prog-bar" id="sfTrendBar" style="width:50%"></div></div>
+                                    </div>
+                                    <div class="sa-factor">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="sa-factor-label"><i class="bi bi-bar-chart me-1"></i>Trading Volume Activity</span>
+                                            <span class="sa-factor-val" id="sfVol">--</span>
+                                        </div>
+                                        <div class="sa-prog"><div class="sa-prog-bar" id="sfVolBar" style="width:50%"></div></div>
+                                    </div>
+                                    <div class="sa-factor">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="sa-factor-label"><i class="bi bi-heart-pulse me-1"></i>Market Sentiment (F&amp;G)</span>
+                                            <span class="sa-factor-val" id="sfSent">--</span>
+                                        </div>
+                                        <div class="sa-prog"><div class="sa-prog-bar" id="sfSentBar" style="width:50%"></div></div>
+                                    </div>
+                                    <div class="sa-factor">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="sa-factor-label"><i class="bi bi-currency-bitcoin me-1"></i>Crypto Diversification</span>
+                                            <span class="sa-factor-val" id="sfDiv">--</span>
+                                        </div>
+                                        <div class="sa-prog"><div class="sa-prog-bar" id="sfDivBar" style="width:50%"></div></div>
+                                    </div>
+                                </div>
+
+                                <!-- Analysis + Recommendation + History -->
+                                <div class="col-lg-5 col-md-6 d-flex flex-column gap-2">
+                                    <div class="sa-box">
+                                        <div class="sa-box-title">Market Analysis</div>
+                                        <p class="sa-expl-text" id="saExplanation">Loading market data...</p>
+                                    </div>
+                                    <div class="sa-box" id="saRecBox">
+                                        <div class="d-flex align-items-start gap-2">
+                                            <i class="bi bi-lightbulb-fill sa-rec-icon" id="saRecIcon" style="color:var(--yellow)"></i>
+                                            <div>
+                                                <div class="sa-box-title">Trading Recommendation</div>
+                                                <div class="sa-rec-action" id="saRecAction">--</div>
+                                                <div class="sa-rec-detail" id="saRecDetail">Analyzing market conditions...</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sa-box">
+                                        <div class="sa-box-title mb-1">Sentiment History (30 days)</div>
+                                        <div id="saHistoryChart" style="min-height:65px"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Gainers / Losers -->
+            <div class="row g-3 mb-3 reveal-on-scroll delay-1">
+                <div class="col-md-6">
+                    <div class="card cv-card">
+                        <div class="card-header text-green"><i class="bi bi-arrow-up-circle"></i> Top Gainers (24h)</div>
+                        <div class="card-body p-0">
+                            <table class="table table-dark table-hover mb-0 cv-table">
+                                <thead><tr><th>Coin</th><th>Price</th><th>24h %</th></tr></thead>
+                                <tbody id="gainersBody"><tr><td colspan="3" class="text-center py-3"><div class="spinner-border spinner-border-sm text-success"></div></td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card cv-card">
+                        <div class="card-header text-red"><i class="bi bi-arrow-down-circle"></i> Top Losers (24h)</div>
+                        <div class="card-body p-0">
+                            <table class="table table-dark table-hover mb-0 cv-table">
+                                <thead><tr><th>Coin</th><th>Price</th><th>24h %</th></tr></thead>
+                                <tbody id="losersBody"><tr><td colspan="3" class="text-center py-3"><div class="spinner-border spinner-border-sm text-danger"></div></td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top 50 Table -->
+            <div class="card cv-card reveal-on-scroll delay-2">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-trophy"></i> Top Cryptocurrencies by Market Cap</span>
+                    <small class="text-muted">Auto-refreshes every 60s</small>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 cv-table">
+                            <thead>
+                                <tr><th>#</th><th>Coin</th><th>Price</th><th>24h %</th><th>7d %</th><th>Market Cap</th><th>Volume (24h)</th><th></th></tr>
+                            </thead>
+                            <tbody id="coinsTableBody">
+                                <tr><td colspan="8" class="text-center py-5"><div class="spinner-border text-primary"></div><div class="text-muted mt-2 small">Fetching live data...</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════ CHARTS ══════════════════════════ -->
+        <div class="tab-pane fade" id="charts">
+          <div class="cv-chart-page">
+
+            <!-- ══ Master Chart Card ══ -->
+            <div class="cv-chart-master">
+
+              <!-- Ticker row: coin identity + live price -->
+              <div class="cv-ticker" id="priceInfoBar">
+                <div class="cv-ticker-left">
+                  <img id="chartCoinIcon" src="" alt="" class="cv-ticker-icon" onerror="coinImgFallback(this,'')">
+                  <div>
+                    <div class="cv-ticker-name-row">
+                      <span id="chartCoinName" class="cv-ticker-name">Bitcoin</span>
+                      <span id="chartCoinSymbol" class="cv-ticker-sym">BTC</span>
+                      <span id="wsLiveDot" class="cv-live-dot" style="display:none" title="Live data"></span>
+                    </div>
+                    <div class="cv-ticker-sub">Cryptocurrency · USD Pair</div>
+                  </div>
+                </div>
+                <div class="cv-ticker-center">
+                  <span id="chartCurrentPrice" class="cv-ticker-price">—</span>
+                  <span id="chart24hChange" class="cv-ticker-chg"></span>
+                </div>
+                <div class="cv-ticker-right">
+                  <div class="cv-ts"><span class="cv-ts-l">24h High</span><span id="chart24hHigh" class="cv-ts-v cv-ts-up">—</span></div>
+                  <div class="cv-ts"><span class="cv-ts-l">24h Low</span><span id="chart24hLow" class="cv-ts-v cv-ts-dn">—</span></div>
+                  <div class="cv-ts cv-ts-hide"><span class="cv-ts-l">Market Cap</span><span id="chartMarketCap" class="cv-ts-v">—</span></div>
+                </div>
+              </div>
+
+              <!-- Toolbar row: all controls -->
+              <div class="cv-toolbar">
+                <select id="chartCoinSelect" class="cv-sel-coin"></select>
+                <div class="cv-tb-sep"></div>
+                <div class="cv-tf-group" id="timeframeBtns">
+                  <button class="cv-tf-btn" data-days="1">1D</button>
+                  <button class="cv-tf-btn" data-days="7">1W</button>
+                  <button class="cv-tf-btn active" data-days="30">1M</button>
+                  <button class="cv-tf-btn" data-days="90">3M</button>
+                  <button class="cv-tf-btn" data-days="365">1Y</button>
+                </div>
+                <div class="cv-tb-sep"></div>
+                <div class="cv-type-grp">
+                  <button class="cv-type-btn active" id="lineChartBtn" title="Line"><i class="bi bi-graph-up"></i> Line</button>
+                  <button class="cv-type-btn" id="candleChartBtn" title="Candle"><i class="bi bi-bar-chart-steps"></i> Candle</button>
+                </div>
+                <div class="cv-tb-sep"></div>
+                <button class="cv-draw-btn" id="indBtn" title="Indicators"><i class="bi bi-sliders2"></i> <span>Indicators</span></button>
+                <div class="cv-tb-flex"></div>
+                <div class="cv-zoom-group">
+                  <button class="cv-draw-btn cv-zoom-btn" id="zoomInBtn"  title="Zoom in"><i class="bi bi-zoom-in"></i></button>
+                  <button class="cv-draw-btn cv-zoom-btn" id="zoomOutBtn" title="Zoom out"><i class="bi bi-zoom-out"></i></button>
+                </div>
+                <button class="cv-draw-btn" id="downloadChartBtn" title="Download chart as PNG"><i class="bi bi-download"></i> <span>PNG</span></button>
+                <button class="cv-draw-btn" id="drawTrendBtn"><i class="bi bi-pencil"></i> <span>Draw</span></button>
+              </div>
+
+              <!-- Drawing panel (reveals when Draw is active) -->
+              <div id="drawPanel" class="cv-draw-panel" style="display:none">
+                <div class="draw-tool-group" id="drawToolGroup">
+                  <button class="draw-tool-btn active" data-tool="line"  title="Trend Line"><i class="bi bi-slash-lg"></i></button>
+                  <button class="draw-tool-btn" data-tool="hline" title="Horizontal Line"><i class="bi bi-dash-lg"></i></button>
+                  <button class="draw-tool-btn" data-tool="vline" title="Vertical Line"><i class="bi bi-record2"></i></button>
+                  <button class="draw-tool-btn" data-tool="rect"  title="Rectangle"><i class="bi bi-square"></i></button>
+                  <button class="draw-tool-btn" data-tool="arrow" title="Arrow"><i class="bi bi-arrow-up-right"></i></button>
+                  <button class="draw-tool-btn" data-tool="text"  title="Text"><i class="bi bi-fonts"></i></button>
+                </div>
+                <div class="cv-draw-sep"></div>
+                <div class="cv-draw-colors">
+                  <button class="trend-color-btn active" data-color="#22d3ee" style="background:#22d3ee"></button>
+                  <button class="trend-color-btn"        data-color="#f59e0b" style="background:#f59e0b"></button>
+                  <button class="trend-color-btn"        data-color="#f43f5e" style="background:#f43f5e"></button>
+                  <button class="trend-color-btn"        data-color="#22c55e" style="background:#22c55e"></button>
+                  <button class="trend-color-btn"        data-color="#a78bfa" style="background:#a78bfa"></button>
+                </div>
+                <select id="drawLineWidth" class="cv-draw-width">
+                  <option value="1">Thin</option><option value="2" selected>Medium</option>
+                  <option value="3">Thick</option><option value="4">Bold</option>
+                </select>
+                <div class="cv-draw-sep"></div>
+                <button class="cv-draw-act" id="undoTrendBtn"><i class="bi bi-arrow-counterclockwise"></i> Undo</button>
+                <button class="cv-draw-act cv-draw-clr" id="clearTrendBtn"><i class="bi bi-x-circle"></i> Clear</button>
+                <span id="trendStatus" class="cv-draw-status"></span>
+              </div>
+
+              <!-- Chart canvas -->
+              <div class="cv-chart-area">
+                <div id="mainChart" class="cv-main-chart"></div>
+                <canvas id="trendCanvas" class="cv-trend-canvas"></canvas>
+                <div id="chartTooltip" class="cv-chart-tooltip" style="display:none"></div>
+              </div>
+
+            </div><!-- .cv-chart-master -->
+
+            <!-- ══ Sub-charts Card ══ -->
+            <div class="cv-sub-card">
+              <div class="cv-sub-head">
+                <div class="cv-sub-tabs">
+                  <button class="cv-sub-tab active" data-sub="volume"><i class="bi bi-bar-chart-fill"></i> Volume</button>
+                  <button class="cv-sub-tab" data-sub="rsi"><i class="bi bi-speedometer2"></i> RSI (14)</button>
+                  <button class="cv-sub-tab" data-sub="macd"><i class="bi bi-activity"></i> MACD</button>
+                </div>
+                <span class="cv-sub-desc" id="subTabDesc">Total trading volume in USD</span>
+              </div>
+              <div class="cv-sub-panels">
+                <div class="cv-sub-panel active" id="subVolume">
+                  <div id="volumeChart" style="min-height:120px"></div>
+                </div>
+                <div class="cv-sub-panel" id="subRSI">
+                  <div id="rsiChart" style="min-height:150px"></div>
+                  <div class="cv-ind-note"><i class="bi bi-info-circle-fill"></i> Below 30 = Oversold · Above 70 = Overbought</div>
+                </div>
+                <div class="cv-sub-panel" id="subMACD">
+                  <div id="macdChart" style="min-height:150px"></div>
+                  <div class="cv-ind-note"><i class="bi bi-info-circle-fill"></i> MACD above Signal = Bullish · Below = Bearish</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ Annotations ══ -->
+            <details class="cv-annot-wrap">
+              <summary class="cv-annot-hd">
+                <i class="bi bi-pencil-square"></i> Chart Annotations
+                <i class="bi bi-chevron-down cv-annot-chev"></i>
+              </summary>
+              <div class="cv-annot-bd">
+                <div class="cv-annot-form">
+                  <input type="date" id="annotationDate" class="form-control form-control-sm">
+                  <select id="annotationType" class="form-select form-select-sm">
+                    <option value="buy">Buy Signal</option>
+                    <option value="sell">Sell Signal</option>
+                    <option value="note">Note</option>
+                    <option value="support">Support</option>
+                    <option value="resistance">Resistance</option>
+                  </select>
+                  <input type="number" id="annotationPrice" class="form-control form-control-sm" placeholder="Price level">
+                  <input type="text"   id="annotationNote"  class="form-control form-control-sm" placeholder="Note">
+                  <button class="btn btn-primary btn-sm" id="addAnnotationBtn"><i class="bi bi-plus-lg"></i> Add</button>
+                </div>
+                <div id="annotationsList" class="cv-annot-list mt-2"><span class="text-muted small">No annotations yet.</span></div>
+              </div>
+            </details>
+
+          </div>
+        </div>
+
+        <!-- ══════════════════════════ PREDICTION & SIGNALS ══════════════════════════ -->
+        <div class="tab-pane fade" id="prediction">
+            <div class="row g-3">
+
+                <!-- Controls -->
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-body py-3">
+                            <div class="d-flex flex-wrap align-items-center gap-4">
+                                <div class="pred-ctrl-group">
+                                    <div class="pred-ctrl-label">Coin</div>
+                                    <select id="predCoinSelect" class="form-select form-select-sm" style="width:200px"></select>
+                                </div>
+                                <div class="pred-ctrl-group">
+                                    <div class="pred-ctrl-label">Forecast</div>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="number" id="predDays" class="form-control form-control-sm" value="7" min="1" max="30" style="width:60px">
+                                        <span class="text-muted small">days</span>
+                                    </div>
+                                </div>
+                                <div class="pred-ctrl-group">
+                                    <div class="pred-ctrl-label">History window</div>
+                                    <select id="predHistoryDays" class="form-select form-select-sm" style="width:120px">
+                                        <option value="30">30 days</option>
+                                        <option value="60">60 days</option>
+                                        <option value="90" selected>90 days</option>
+                                        <option value="180">180 days</option>
+                                    </select>
+                                </div>
+                                <div class="pred-ctrl-group">
+                                    <div class="pred-ctrl-label">&nbsp;</div>
+                                    <button class="btn btn-primary pred-run-btn" id="runPredictionBtn">
+                                        <i class="bi bi-robot"></i> Run Prediction
+                                    </button>
+                                </div>
+                                <div class="ms-auto text-end d-none d-md-block">
+                                    <div class="pred-model-badge"><i class="bi bi-graph-up"></i> OLS Linear Regression</div>
+                                    <div class="text-muted" style="font-size:0.72rem;margin-top:3px">Statistical model · Educational use only</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="col-lg-8">
+                    <div class="card cv-card h-100 d-flex flex-column pred-chart-card">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-graph-up-arrow me-1"></i> Price Prediction Chart</span>
+                            <span class="pred-chart-sub">Statistical regression model</span>
+                        </div>
+                        <div class="card-body p-0 d-flex flex-column" style="min-height:0">
+                            <div id="predictionChart" style="flex:1;min-height:0;display:flex;flex-direction:column">
+                                <div class="pred-empty-state">
+                                    <i class="bi bi-robot pred-empty-icon"></i>
+                                    <div class="pred-empty-title">No prediction yet</div>
+                                    <div class="pred-empty-sub">Select a coin and click <strong>Run Prediction</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats + Recommendation sidebar -->
+                <div class="col-lg-4 d-flex flex-column gap-3">
+                    <div class="card cv-card">
+                        <div class="card-header"><i class="bi bi-bar-chart-line me-1"></i> Prediction Stats</div>
+                        <div class="card-body p-0" id="predStats">
+                            <div class="pred-panel-empty">
+                                <i class="bi bi-bar-chart-line pred-panel-empty-icon"></i>
+                                <div>Run a prediction to see statistics.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card cv-card flex-grow-1 d-flex flex-column">
+                        <div class="card-header"><i class="bi bi-lightbulb me-1"></i> Smart Recommendation</div>
+                        <div class="card-body p-0 d-flex flex-column flex-grow-1" id="recommendationPanel">
+                            <div class="pred-panel-empty">
+                                <i class="bi bi-lightbulb pred-panel-empty-icon"></i>
+                                <div>Run a prediction to generate a recommendation.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="col-12">
+                    <div class="pred-disclaimer">
+                        <i class="bi bi-shield-exclamation"></i>
+                        <span><strong>Disclaimer:</strong> Predictions and recommendations are based on statistical analysis of historical data for educational purposes only. Do not use for financial decisions.</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ══════════════════════════ PORTFOLIO ══════════════════════════ -->
+        <div class="tab-pane fade" id="portfolio">
+            <div class="row g-3">
+
+                <!-- Add / Edit Form -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card cv-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span id="portfolioFormTitle"><i class="bi bi-plus-circle"></i> Add Holding</span>
+                            <button class="btn btn-outline-secondary btn-sm d-none" id="cancelEditBtn">Cancel</button>
+                        </div>
+                        <div class="card-body">
+                            <input type="hidden" id="editingHoldingId">
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Coin</label>
+                                <select id="portfolioCoinSelect" class="form-select"></select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Quantity</label>
+                                <input type="number" id="portfolioQty" class="form-control" placeholder="e.g. 0.5" min="0" step="any">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Buy Price (USD)</label>
+                                <input type="number" id="portfolioBuyPrice" class="form-control" placeholder="e.g. 45000" min="0" step="any">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Buy Date</label>
+                                <input type="date" id="portfolioBuyDate" class="form-control">
+                            </div>
+                            <button class="btn btn-primary w-100" id="addHoldingBtn"><i class="bi bi-plus-lg"></i> Add to Portfolio</button>
+                            <div id="portfolioError" class="text-danger small mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary + Allocation -->
+                <div class="col-md-8 col-lg-9">
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="card cv-card text-center">
+                                <div class="card-body py-3">
+                                    <div class="stat-label">Total Value</div>
+                                    <div class="fs-5 fw-bold mt-1" id="portfolioTotalValue">$0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card cv-card text-center">
+                                <div class="card-body py-3">
+                                    <div class="stat-label">Total Investment</div>
+                                    <div class="fs-5 fw-bold mt-1" id="portfolioTotalCost">$0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card cv-card text-center">
+                                <div class="card-body py-3">
+                                    <div class="stat-label">Profit / Loss</div>
+                                    <div class="fs-5 fw-bold mt-1" id="portfolioTotalPnL">$0.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card cv-card text-center">
+                                <div class="card-body py-3">
+                                    <div class="stat-label">ROI %</div>
+                                    <div class="fs-5 fw-bold mt-1" id="portfolioROI">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Best / Worst -->
+                        <div class="col-md-6">
+                            <div class="card cv-card">
+                                <div class="card-body py-2 d-flex align-items-center gap-3">
+                                    <i class="bi bi-trophy-fill text-green fs-4"></i>
+                                    <div>
+                                        <div class="stat-label">Best Performer</div>
+                                        <div id="bestAsset" class="fw-bold">—</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card cv-card">
+                                <div class="card-body py-2 d-flex align-items-center gap-3">
+                                    <i class="bi bi-arrow-down-circle-fill text-red fs-4"></i>
+                                    <div>
+                                        <div class="stat-label">Worst Performer</div>
+                                        <div id="worstAsset" class="fw-bold">—</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Allocation Chart -->
+                        <div class="col-12">
+                            <div class="card cv-card">
+                                <div class="card-header"><i class="bi bi-pie-chart"></i> Asset Allocation</div>
+                                <div class="card-body">
+                                    <div id="allocationChart" style="min-height:200px"><div class="text-center text-muted py-4 small">No holdings yet.</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Holdings Table -->
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-table"></i> Your Holdings</span>
+                            <button class="btn btn-outline-danger btn-sm" id="clearPortfolioBtn"><i class="bi bi-trash"></i> Clear All</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover mb-0 cv-table">
+                                    <thead>
+                                        <tr><th>Coin</th><th>Qty</th><th>Buy Price</th><th>Current</th><th>Value</th><th>P&L ($)</th><th>P&L (%)</th><th>Date</th><th>Actions</th></tr>
+                                    </thead>
+                                    <tbody id="holdingsTableBody">
+                                        <tr><td colspan="9" class="text-center text-muted py-4">No holdings yet. Add your first crypto above.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════ WATCHLIST ══════════════════════════ -->
+        <div class="tab-pane fade" id="watchlist">
+            <div class="row g-3">
+
+                <!-- Watchlist Controls -->
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-body py-2">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <div class="ctrl-lbl me-1"><i class="bi bi-star-fill text-warning me-1"></i> Add Coin</div>
+                                <select id="watchlistCoinSelect" class="form-select form-select-sm" style="width:240px"></select>
+                                <button class="btn btn-primary btn-sm" id="addWatchlistBtn">
+                                    <i class="bi bi-star-fill"></i> Add to Watchlist
+                                </button>
+                                <span class="text-muted small ms-2">Track your favourite coins with live prices</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Watchlist Table -->
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-star-fill text-warning"></i> My Watchlist</span>
+                            <button class="btn btn-outline-secondary btn-sm" id="refreshWatchlistBtn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover mb-0 cv-table">
+                                    <thead>
+                                        <tr><th>Coin</th><th>Price</th><th>24h Change</th><th>Actions</th></tr>
+                                    </thead>
+                                    <tbody id="watchlistTableBody">
+                                        <tr><td colspan="4" class="text-center text-muted py-4"><div class="spinner-border spinner-border-sm text-primary"></div></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════ COMPARE ══════════════════════════ -->
+        <div class="tab-pane fade" id="compare">
+            <div class="row g-3">
+
+                <!-- Coin Selectors -->
+                <div class="col-12">
+                    <div class="card cv-card">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <span><i class="bi bi-bar-chart-steps"></i> Select Coins to Compare</span>
+                            <span class="small text-muted">Up to 3 coins &middot; 7-day performance</span>
+                        </div>
+                        <div class="card-body py-2">
+                            <div class="d-flex flex-wrap align-items-center gap-3">
+                                <div>
+                                    <div class="cmp-label">Coin 1</div>
+                                    <select id="cmpCoin1" class="form-select form-select-sm" style="width:210px"></select>
+                                </div>
+                                <div>
+                                    <div class="cmp-label">Coin 2</div>
+                                    <select id="cmpCoin2" class="form-select form-select-sm" style="width:210px"></select>
+                                </div>
+                                <div>
+                                    <div class="cmp-label">Coin 3 <span class="text-muted">(Optional)</span></div>
+                                    <select id="cmpCoin3" class="form-select form-select-sm" style="width:210px"></select>
+                                </div>
+                                <div class="mt-3 align-self-end">
+                                    <button class="btn btn-primary btn-sm" id="runCompareBtn">
+                                        <i class="bi bi-bar-chart-steps"></i> Compare Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Cards -->
+                <div class="col-12" id="compareCards" style="display:none">
+                    <div class="row g-3" id="compareCardsRow"></div>
+                </div>
+
+                <!-- Comparison Chart -->
+                <div class="col-12" id="compareChartWrap" style="display:none">
+                    <div class="card cv-card">
+                        <div class="card-header"><i class="bi bi-graph-up"></i> 7-Day Price Performance (% Change from Start)</div>
+                        <div class="card-body">
+                            <div id="comparisonChart" style="min-height:320px"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder -->
+                <div class="col-12" id="comparePlaceholder">
+                    <div class="card cv-card">
+                        <div class="card-body text-center py-5">
+                            <i class="bi bi-bar-chart-steps fs-1 d-block mb-2 opacity-25"></i>
+                            <p class="text-muted">Select up to 3 coins above and click <strong>Compare</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ══════════════ MARKET PAGE ══════════════ -->
+        <div class="tab-pane fade" id="market">
+
+            <!-- Section: Heatmap -->
+            <div class="mkt-section-head">
+                <div class="mkt-section-title"><i class="bi bi-grid-3x3-gap-fill"></i> Performance Heatmap</div>
+                <span class="small text-muted">Top 50 by market cap · sized by cap · colored by 24h %</span>
+            </div>
+            <div class="mkt-heatmap-card">
+                <div class="mkt-heatmap-header">
+                    <div class="mkt-heatmap-title">
+                        <i class="bi bi-grid-3x3-gap-fill" style="color:var(--cyan)"></i>
+                        Live Market Heatmap
+                    </div>
+                    <div class="mkt-legend">
+                        <span style="color:#ef4444">−5%</span>
+                        <div class="mkt-legend-grad"></div>
+                        <span style="color:#10b981">+5%</span>
+                    </div>
+                </div>
+                <div id="mktHeatmap">
+                    <div style="display:flex;align-items:center;justify-content:center;min-height:360px">
+                        <div class="dots-loader"><div class="dots-ring"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Market Pulse -->
+            <div class="mkt-section-head" style="margin-top:20px">
+                <div class="mkt-section-title"><i class="bi bi-activity"></i> Market Pulse</div>
+                <span class="small text-muted">Breadth of top 100 assets</span>
+            </div>
+            <div class="mkt-pulse" id="mktPulse">
+                <div class="mkt-pulse-item">
+                    <div class="mkt-pulse-label">Advancing</div>
+                    <div class="mkt-pulse-value up" id="mktPulseGainers">—</div>
+                    <div class="mkt-pulse-bar"><div class="mkt-pulse-up" id="mktPulseGainersBar" style="width:0%"></div><div class="mkt-pulse-dn" id="mktPulseLosersBar1" style="width:0%"></div><div class="mkt-pulse-fl" id="mktPulseFlatBar1" style="width:0%"></div></div>
+                </div>
+                <div class="mkt-pulse-item">
+                    <div class="mkt-pulse-label">Declining</div>
+                    <div class="mkt-pulse-value down" id="mktPulseLosers">—</div>
+                </div>
+                <div class="mkt-pulse-item">
+                    <div class="mkt-pulse-label">Unchanged</div>
+                    <div class="mkt-pulse-value" id="mktPulseFlat">—</div>
+                </div>
+                <div class="mkt-pulse-item">
+                    <div class="mkt-pulse-label">Avg 24h Change</div>
+                    <div class="mkt-pulse-value" id="mktPulseAvg">—</div>
+                </div>
+                <div class="mkt-pulse-item">
+                    <div class="mkt-pulse-label">Total 24h Volume</div>
+                    <div class="mkt-pulse-value" id="mktPulseVol">—</div>
+                </div>
+            </div>
+
+            <!-- Section: Screener -->
+            <div class="mkt-section-head" style="margin-top:20px">
+                <div class="mkt-section-title"><i class="bi bi-funnel-fill"></i> Coin Screener</div>
+                <span class="small text-muted">Filter · sort · explore 100 assets</span>
+            </div>
+            <div class="mkt-screener-card">
+                <div class="mkt-screener-toolbar">
+                    <div class="mkt-search-wrap">
+                        <i class="bi bi-search"></i>
+                        <input type="text" class="mkt-search" id="mktSearch" placeholder="Name or symbol…">
+                    </div>
+                    <button class="mkt-chip active" data-mkt-cat="all">All</button>
+                    <button class="mkt-chip" data-mkt-cat="Layer 1">Layer 1</button>
+                    <button class="mkt-chip" data-mkt-cat="Layer 2">Layer 2</button>
+                    <button class="mkt-chip" data-mkt-cat="DeFi">DeFi</button>
+                    <button class="mkt-chip" data-mkt-cat="Gaming">Gaming</button>
+                    <button class="mkt-chip" data-mkt-cat="Meme">Meme</button>
+                    <div class="mkt-sort-wrap">
+                        <select class="mkt-sort" id="mktSort">
+                            <option value="rank">Sort: Rank</option>
+                            <option value="price_desc">Price ↓</option>
+                            <option value="price_asc">Price ↑</option>
+                            <option value="change24_desc">24h % ↓</option>
+                            <option value="change24_asc">24h % ↑</option>
+                            <option value="mcap_desc">Market Cap ↓</option>
+                            <option value="vol_desc">Volume ↓</option>
+                        </select>
+                    </div>
+                </div>
+                <table class="mkt-table">
+                    <thead>
+                        <tr>
+                            <th class="mkt-rank">#</th>
+                            <th>Coin</th>
+                            <th>Price</th>
+                            <th>24h %</th>
+                            <th class="hide-sm">7d %</th>
+                            <th class="hide-sm">Market Cap</th>
+                            <th class="hide-sm">Volume (24h)</th>
+                            <th class="hide-sm">Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mktTableBody">
+                        <tr><td colspan="8" class="mkt-empty"><div class="dots-loader" style="padding:16px 0"><div class="dots-ring"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div><!-- #market -->
+
+    </div><!-- tab-content -->
+</div><!-- container-fluid -->
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="cv-footer reveal-on-scroll">
+    <div class="footer-main">
+        <div class="footer-grid">
+
+            <!-- Brand column -->
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="22" height="22" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="flg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient>
+                            <linearGradient id="flg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient>
+                        </defs>
+                        <polygon points="17,1.5 30,9 30,25 17,32.5 4,25 4,9" fill="url(#flg1)" fill-opacity="0.15" stroke="url(#flg1)" stroke-width="1.5"/>
+                        <polyline points="7,24 11,18 15.5,20.5 21,12 27,15" fill="none" stroke="url(#flg2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="21" cy="12" r="2.2" fill="#22d3ee"/>
+                    </svg>
+                    <span class="footer-brand">CRYVORA</span>
+                </div>
+                <p class="footer-desc">CRYVORA is a cryptocurrency analytics platform that provides real-time market monitoring, technical analysis, price prediction, and portfolio management tools. Designed to simplify complex market data, the platform helps users track performance, evaluate trends, and make informed investment decisions.</p>
+                <div class="footer-tags">
+                    <span class="footer-tag">Real-Time</span>
+                    <span class="footer-tag">Analytics</span>
+                    <span class="footer-tag">Portfolio</span>
+                    <span class="footer-tag">Prediction</span>
+                </div>
+            </div>
+
+            <!-- About column -->
+            <div class="footer-col">
+                <h6 class="footer-heading">About Us</h6>
+                <p class="footer-text">Cryvora is an academic project demonstrating real-time financial data visualisation, technical analysis, and predictive modelling using publicly available APIs.</p>
+                <p class="footer-text mt-2">Built with Bootstrap 5, ApexCharts, and vanilla JavaScript — no server-side dependencies required.</p>
+            </div>
+
+            <!-- Data Sources column -->
+            <div class="footer-col">
+                <h6 class="footer-heading">Data Sources</h6>
+                <ul class="footer-refs">
+                    <li>
+                        <a href="https://www.coinlore.com/cryptocurrency-data-api" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">Coinlore API</span>
+                            <span class="fl-desc">Market data, tickers &amp; global stats</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://binance-docs.github.io/apidocs/" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">Binance Public API</span>
+                            <span class="fl-desc">OHLCV candlestick &amp; kline data</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://alternative.me/crypto/fear-and-greed-index/" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">Alternative.me</span>
+                            <span class="fl-desc">Crypto Fear &amp; Greed Index</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://coincap.io" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">CoinCap CDN</span>
+                            <span class="fl-desc">Cryptocurrency logo images</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://getbootstrap.com" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">Bootstrap 5.3</span>
+                            <span class="fl-desc">Responsive UI framework</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://tradingview.github.io/lightweight-charts/" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">TradingView Lightweight Charts</span>
+                            <span class="fl-desc">Main price, volume, RSI &amp; MACD charts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://apexcharts.com" class="footer-link" target="_blank" rel="noopener">
+                            <span class="fl-name">ApexCharts 3.44</span>
+                            <span class="fl-desc">Prediction, portfolio &amp; comparison charts</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>&copy; 2026 Cryvora.</span>
+    </div>
+</footer>
+
+</div><!-- main-area -->
+
+<!-- Toast Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+
+<!-- ── Indicator Panel (floating, positioned via JS) ── -->
+<div id="indPanel" class="cv-ind-panel">
+  <div class="cv-ind-panel-head">
+    <span><i class="bi bi-sliders2"></i> INDICATORS</span>
+    <button class="cv-ind-close" id="indCloseBtn"><i class="bi bi-x-lg"></i></button>
+  </div>
+
+  <div class="cv-ind-section-label">Overlay</div>
+  <div class="cv-ind-list">
+    <label class="cv-ind-row active" style="--ind-color:#f59e0b;--ind-glow:rgba(245,158,11,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indSma20" checked hidden>
+      <span class="cv-ind-dot" style="background:#f59e0b"></span>
+      <span class="cv-ind-name">SMA <em>20</em></span>
+      <span class="cv-ind-sw"></span>
+    </label>
+    <label class="cv-ind-row active" style="--ind-color:#8b5cf6;--ind-glow:rgba(139,92,246,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indSma50" checked hidden>
+      <span class="cv-ind-dot" style="background:#8b5cf6"></span>
+      <span class="cv-ind-name">SMA <em>50</em></span>
+      <span class="cv-ind-sw"></span>
+    </label>
+    <label class="cv-ind-row" style="--ind-color:#22d3ee;--ind-glow:rgba(34,211,238,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indEma12" hidden>
+      <span class="cv-ind-dot" style="background:#22d3ee"></span>
+      <span class="cv-ind-name">EMA <em>12</em></span>
+      <span class="cv-ind-sw"></span>
+    </label>
+    <label class="cv-ind-row" style="--ind-color:#f43f5e;--ind-glow:rgba(244,63,94,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indEma26" hidden>
+      <span class="cv-ind-dot" style="background:#f43f5e"></span>
+      <span class="cv-ind-name">EMA <em>26</em></span>
+      <span class="cv-ind-sw"></span>
+    </label>
+    <label class="cv-ind-row" style="--ind-color:#ef4444;--ind-glow:rgba(239,68,68,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indBB" hidden>
+      <span class="cv-ind-dot" style="background:#ef4444"></span>
+      <span class="cv-ind-name">Bollinger Bands</span>
+      <span class="cv-ind-sw"></span>
+    </label>
+    <label class="cv-ind-row" style="--ind-color:#10b981;--ind-glow:rgba(16,185,129,0.07)">
+      <input type="checkbox" class="cv-ind-check" id="indVWAP" hidden>
+      <span class="cv-ind-dot" style="background:#10b981"></span>
+      <span class="cv-ind-name">VWAP</span>
+      <span class="cv-ind-sw"></span>
+    </label>
+  </div>
+
+  <div class="cv-ind-section-label" style="margin-top:2px">Sub-Chart</div>
+  <div class="cv-ind-sub-chips">
+    <span class="cv-ind-sub-chip active" data-sub="volume">Volume</span>
+    <span class="cv-ind-sub-chip" data-sub="rsi">RSI (14)</span>
+    <span class="cv-ind-sub-chip" data-sub="macd">MACD</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- TradingView Lightweight Charts — main/volume/RSI/MACD panels -->
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.4/dist/lightweight-charts.standalone.production.js"></script>
+<!-- ApexCharts — prediction, portfolio donut, comparison, sentiment sparkline -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.44.0/dist/apexcharts.min.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/api.js"></script>
+<script src="js/indicators.js"></script>
+<script src="js/prediction.js"></script>
+<script src="js/recommendation.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/portfolio.js"></script>
+<script src="js/watchlist.js"></script>
+<script src="js/custom-select.js"></script>
+<script src="js/ws.js"></script>
+<script src="js/app.js"></script>
+
+<!-- Scroll to Top -->
+<button id="scrollTopBtn" title="Back to top">
+    <i class="bi bi-arrow-up-short"></i>
+</button>
+
+</body>
+</html>
